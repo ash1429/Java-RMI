@@ -59,25 +59,45 @@ public class ImageClient{
 
 	//taking input of original Image (Have to make changes here when splitting images into pieces)
 			BufferedImage originalImage = ImageIO.read(new File("pic.png"));
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(originalImage, "png", baos);
+
+			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			// ImageIO.write(originalImage, "png", baos);
+	//splitting up
+		ByteArrayOutputStream baosA = new ByteArrayOutputStream();
+		ByteArrayOutputStream baosB = new ByteArrayOutputStream();
+		ByteArrayOutputStream baosC = new ByteArrayOutputStream();
+		ByteArrayOutputStream baosD = new ByteArrayOutputStream();
+
+		BufferedImage subImageA = originalImage.getSubimage(0,0,(originalImage.getWidth()/2),(originalImage.getHeight()/2));
+		BufferedImage subImageB = originalImage.getSubimage((originalImage.getWidth()/2),0,(originalImage.getWidth()/2),(originalImage.getHeight()/2));
+		BufferedImage subImageC = originalImage.getSubimage(0,(originalImage.getHeight()/2),(originalImage.getWidth()/2),(originalImage.getHeight()/2));
+		BufferedImage subImageD = originalImage.getSubimage((originalImage.getWidth()/2),(originalImage.getHeight()/2),(originalImage.getWidth()/2),(originalImage.getHeight()/2));
+
+		ImageIO.write(subImageA, "png", baosA);
+		ImageIO.write(subImageB, "png", baosB);
+		ImageIO.write(subImageC, "png", baosC);
+		ImageIO.write(subImageD, "png", baosD);
+
 
 	//sending Image
-			byte[] rawImageA = intfcObjImageA.makingGreen(baos.toByteArray());
-			byte[] rawImageB = intfcObjImageB.makingRed(baos.toByteArray());
-			byte[] rawImageC = intfcObjImageC.makingBlue(baos.toByteArray());
-			byte[] rawImageD = intfcObjImageD.makingGray(baos.toByteArray());
+			byte[] rawImageA = intfcObjImageA.makingGreen(baosA.toByteArray());
+			byte[] rawImageB = intfcObjImageB.makingRed(baosB.toByteArray());
+			byte[] rawImageC = intfcObjImageC.makingBlue(baosC.toByteArray());
+			byte[] rawImageD = intfcObjImageD.makingGray(baosD.toByteArray());
 
+	//receiving Image
 			BufferedImage returnedImageA = javax.imageio.ImageIO.read(new ByteArrayInputStream(rawImageA));
 			BufferedImage returnedImageB = javax.imageio.ImageIO.read(new ByteArrayInputStream(rawImageB));
 			BufferedImage returnedImageC = javax.imageio.ImageIO.read(new ByteArrayInputStream(rawImageC));
 			BufferedImage returnedImageD = javax.imageio.ImageIO.read(new ByteArrayInputStream(rawImageD));
 
+	//hudai ensure houar jonno
 			System.out.println(returnedImageA.getWidth());
 			System.out.println(returnedImageB.getHeight());
 			System.out.println(returnedImageC.getHeight());
 			System.out.println(returnedImageD.getHeight());
 
+	//writing output of each server
 			File outPutFileA = new File("returnedFromServerA.png");
 			ImageIO.write(returnedImageA, "png", outPutFileA);
 

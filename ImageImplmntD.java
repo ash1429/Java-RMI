@@ -26,12 +26,16 @@ public class ImageImplmntD extends UnicastRemoteObject implements ImageIntrfcD{
 		      for(int x = 0; x < width; x++){
 		        int p = img.getRGB(x,y);
 
-
-                int a = (p>>24)&0xff;
+ 				int a = (p>>24)&0xff;
+                int r = (p>>16)&0xff;
+                int g = (p>>8)&0xff;
                 int b = p&0xff;
 
-                //set new RGB
-				p = (a<<24) | (0<<16) | (0<<8) | b;
+                //calculate average
+                int avg = (r+g+b)/3;
+
+                //replace RGB value with avg
+				p = (a<<24) | (avg<<16) | (avg<<8) | avg;
 
 		        img.setRGB(x, y, p);
 		      }

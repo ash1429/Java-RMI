@@ -65,6 +65,7 @@ public class ImageClient{
 
 			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			// ImageIO.write(originalImage, "png", baos);
+
 	//splitting up
 		ByteArrayOutputStream baosA = new ByteArrayOutputStream();
 		ByteArrayOutputStream baosB = new ByteArrayOutputStream();
